@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Send Bulk SMS</title>
+    <link rel="icon" type="image/x-icon" href="/style/favicon.png">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="A simple interface to send bulk sms messages using the Telnyx API.">
+    <meta content="Telnyx, Telnyx API, Bulk SMS, Bulk Text, Send SMS, Send Text, Alphanumeric, SMS, Test Message" name="keywords">
+    <meta name="robots" content="all">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <link href="style/style.css" rel="stylesheet" type="text/css" />
+</head>
+<div id="app" data-v-app="">
+    <main>
+        <div class="hero__container bg--black hero__container--page">
+            <div class="hero__image hero__image--overlay">
+                <picture>
+                    <img src="style/sms-header.webp" alt="" />
+                </picture>
+            </div>
+            <div class="hero__content hero__content--left">
+                <div class="hero__content__inner container hero__content__inner--left">
+                    <h1>Bulk SMS by Team777</h1>
+                    <h2>Send loads of texts with a single click</h2>
+                </div>
+            </div>
+        </div>
+        <div class="services__body">
+            <div class="content-block">
+                <div class="content-block__wrapper">
+                    <div class="content-block__image">
+                        <picture>
+                            <img src="style/social-messages.svg" alt="" />
+                        </picture>
+                    </div>
+                    <div class="content-block__text">
+                        <h2 class="content-block__heading ">Let's Get Texting!</h2>
+                        <div class="content-block__body ">
+                            <p>Complete the form below to send SMS messages with your Telnyx account.</p>
+                            <ul>
+                                <li>Send thousands of messages in seconds.</li>
+                                <li>Improve your reach with alphanumeric sender names.</li>
+                                <li>Message numbers from any country.</li>
+                                <li>Intuitive user interface and experience.</li>
+                                <li>Fast and accurate number validation.</li>
+                            </ul>
+                            <p>Team777 <a href="https://team777.pro" target="_blank" rel="noopener noreferrer">Your Coder</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="services__body">
+            <div class="content-block">
+                <ul class="nav nav-tabs justify-content-center">
+                    <li class="nav-item flex-fill" title="Telnyx Account Details">
+                        <div class="nav-link active rounded-circle mx-auto d-flex align-items-center justify-content-center" onclick="goToTab(1);" id="tab-step1">
+                            <div class="progress-steps">1</div>
+                        </div>
+                    </li>
+                    <li class="nav-item flex-fill" role="presentation" data-bs-toggle="tooltip" data-bs-placement="top" title="Phone Numbers">
+                        <div class="nav-link nav-disabled rounded-circle mx-auto d-flex align-items-center justify-content-center" onclick="goToTab(2);" id="tab-step2">
+                            <div class="progress-steps">2</div>
+                        </div>
+                    </li>
+                    <li class="nav-item flex-fill" role="presentation" data-bs-toggle="tooltip" data-bs-placement="top" title="Write Message">
+                        <div class="nav-link nav-disabled rounded-circle mx-auto d-flex align-items-center justify-content-center" onclick="goToTab(3);" id="tab-step3">
+                            <div class="progress-steps">3</div>
+                        </div>
+                    </li>
+                    <li class="nav-item flex-fill" role="presentation" data-bs-toggle="tooltip" data-bs-placement="top" title="Send Message">
+                        <div class="nav-link nav-disabled rounded-circle mx-auto d-flex align-items-center justify-content-center" onclick="goToTab(4);" id="tab-step4">
+                            <div class="progress-steps">4</div>
+                        </div>
+                    </li>
+                    <li class="nav-item flex-fill" role="presentation" data-bs-toggle="tooltip" data-bs-placement="top" title="Send Confirmation">
+                        <div class="nav-link nav-disabled rounded-circle mx-auto d-flex align-items-center justify-content-center" onclick="goToTab(5);" id="tab-step5">
+                            <div class="progress-steps">5</div>
+                        </div>
+                    </li>
+                    <div id="navProgressBar" class='nav-progress-bar'></div>
+                    <div id="navLinkBar" class='nav-link-bar'></div>
+                </ul>
+                <div id="progressStepTabContents">
+                    <div class="content-nav-block" id="step1">
+                        <div class="content-block__wrapper">
+                            <div class="content-block__text content-block-navigation">
+                                <h2 class="content-block__heading">Telnyx Account Details</h2>
+                                <div class="content-block__body">
+                                    <ul>
+                                        <li>Enter your Telnyx API key.</li>
+                                        <li>Enter your Telnyx mobile number.</li>
+                                        <li>Enter an alphanumeric name for the messages.*</li>
+                                        <li>Enter your Telnyx messaging profile ID.*</li>
+                                        <br>
+                                        <p>*Options available by ticking the alphanumeric SMS checkbox.</p>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="content-block__text content-block-navigation">
+                                <div id="accountBalance" class="sms-balance"></div>
+                                <div class="sms-numbers-right">
+                                    <div class="contact-form__body contact-form__body__no__border">
+                                        <div>
+                                            <label class="form-check-control">
+                                                <input type="checkbox" id="alphanumericCheck" name="alphanumericCheck"
+                                                    onclick="toggleAlphanumericSMS();" />
+                                                Alphanumeric SMS (Extra costs apply)
+                                            </label>
+                                        </div>
+                                        <div class="form__section">
+                                            <div class="inputTitle">Telnyx API Key:</div>
+                                            <input type="text" id="apiKey" placeholder="Telnyx API Key" value="">
+                                            <div id="numberInput">
+                                                <div class="inputTitle">Telnyx Mobile Number:</div>
+                                                <input type="text" id="telnyxSendFrom" placeholder="Telnyx Mobile Number" value="">
+                                            </div>
+                                            <div id="alphanumericInput" class="hide-element">
+                                                <div class="inputTitle">Alphanumeric Name:</div>
+                                                <input type="text" id="telnyxAlphanumericName" onkeyup="this.value=this.value.replace(/[^a-zA-Z0-9\s]/g, '')" maxlength="11" placeholder="Alphanumeric Name up to 11 Characters" value="">
+                                                <div class="inputTitle">Telnyx Messaging Profile:</div>
+                                                <input type="text" id="telnyxMessagingProfile" placeholder="Telnyx Messaging Profile ID" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-block__wrapper">
+                            <div class="content-back-forward-buttons d-flex justify-content-right">
+                                <div class="content-simple__button">
+                                    <a id="step1-continue" class="button button--primary unicode-next nav-disabled" href="javascript:void(0);" onclick="nextTab(1);">Continue</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-nav-block hide-element" id="step2">
+                        <div class="content-block__wrapper">
+                            <div class="content-block__text content-block-navigation">
+                                <h2 class="content-block__heading">Phone Numbers</h2>
+                                <div class="content-block__body">
+                                    <ul>
+                                        <li>Enter a list of numbers you want to message.</li>
+                                        <li>Separate numbers by:</li>
+                                        <ul class="subpoint">
+                                            <li>Commas</li>
+                                            <li>New lines</li>
+                                            <li>+</li>
+                                        </ul>
+                                        <li>Drag and drop a text file full of numbers into the phone number box to auto populate.</li>
+                                        <li>Check the <a href="https://telnyx.com/pricing/messaging" target="_blank" rel="noopener noreferrer">cost per message</a>.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="content-block__text content-block-navigation">
+                                <div class="sms-numbers-right">
+                                    <div class="contact-form__body contact-form__body__no__border">
+                                        <div class="form__section">
+                                            <div class="inputTitle">Phone Number List:
+                                                <label id="totalNumbers"></label>
+                                            </div>
+                                            <textarea class="fullwidth_textarea fullheight_textarea" placeholder="Populate with phone numbers including country code. E.g. +447123456789" id="phoneNumberInput" ondragover="onDragOverHandler(event)" ondrop="onFilesDropHandler(event)" ondragleave="onDragLeaveHandler(event)"></textarea>
+                                        </div>
+                                        <div>
+                                            <div id="invalidNumbers" class="hide-element">
+                                                <div id="sendErrorsText" class="error_download_delete"></div>
+                                                <img class="download_errors" onClick="downloadErrorNumbers('invalid_numbers')" src="style/download.svg" alt="" />
+                                                <img class="trash_errors" onClick="deleteErrorNumbers('invalidNumbers')" src="style/trash.svg" alt="" />
+                                                <a id="invalid_numbers" class="download_icon hidden-element" href="#" download></a>
+                                            </div>
+                                            <div id="missingCountryCodeErrors" class="hide-element">
+                                                <div id="missingCountryCodeText" class="error_download_delete"></div>
+                                                <img class="download_errors" onClick="downloadErrorNumbers('missing_country_codes')" src="style/download.svg" alt="" />
+                                                <img class="trash_errors" onClick="deleteMissingCountryCode('missingCountryCodeErrors')" src="style/trash.svg" alt="" />
+                                                <a id="missing_country_codes" class="download_icon hidden-element" href="#" download></a>
+                                            </div>
+                                            <div id="duplicateNumbers" class="hide-element">
+                                                <div id="duplicateNumbersText" class="error_download_delete"></div>
+                                                <img class="download_errors" onClick="downloadErrorNumbers('duplicate_numbers')" src="style/download.svg" alt="" />
+                                                <img class="trash_errors" onClick="deleteErrorNumbers('duplicateNumbers')" src="style/trash.svg" alt="" />
+                                                <a id="duplicate_numbers" class="download_icon " href="#" download></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-block__wrapper">
+                            <div class="content-back-forward-buttons d-flex justify-content-between">
+                                <div class="content-simple__button"><a class="button button--grey unicode-back" href="javascript:void(0);" onclick="previousTab(2);">Back</a>
+                                </div>
+                                <div class="content-simple__button">
+                                    <a id="step2-continue" class="button button--primary unicode-next nav-disabled" href="javascript:void(0);" onclick="nextTab(2);">Continue</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-nav-block hide-element" id="step3">
+                        <div class="content-block__wrapper">
+                            <div class="content-block__text content-block-navigation">
+                                <h2 class="content-block__heading">Write Message</h2>
+                                <div class="content-block__body">
+                                    <p>Write a message to send to all of the numbers entered in the last section.</p>
+                                    <p>The character count and number of SMS messages will update as text is entered.*</p>
+                                    <p>*A standard SMS message is limited to 160 characters. If it goes over 160 characters it is broken up into parts of 153 characters.</p>
+                                </div>
+                            </div>
+                            <div class="content-block__text content-block-navigation">
+                                <div class="sms-numbers-right">
+                                    <div class="contact-form__body contact-form__body__no__border">
+                                        <div class="form__section">
+                                            <div class="inputTitle">SMS Message:</div>
+                                            <textarea class="fullwidth_textarea" placeholder="SMS Message" id="textMessageInput"></textarea>
+                                        </div>
+                                        <div id="characterCount">Character Count: 0</div>
+                                        <div id="smsCount">SMS Messages: 0</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-block__wrapper">
+                            <div class="content-back-forward-buttons d-flex justify-content-between">
+                                <div class="content-simple__button"><a class="button button--grey unicode-back" href="javascript:void(0);" onclick="previousTab(3);">Back</a>
+                                </div>
+                                <div class="content-simple__button">
+                                    <a id="step3-continue" class="button button--primary unicode-next nav-disabled" href="javascript:void(0);" onclick="nextTab(3);">Continue</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-nav-block hide-element" id="step4">
+                        <div class="content-block__wrapper">
+                            <div class="content-block__text content-block-navigation">
+                                <h2 class="content-block__heading">Verify and Send</h2>
+                                <div class="content-block__body">
+                                    <p>Please check the details of your message and the number of people the message will be delivered to.</p>
+                                    <ul>
+                                        <li id="totalSendTo"></li>
+                                        <li id="totalCharacters"></li>
+                                        <li id="totalMessages"></li>
+                                        <li id="totalErrors"></li>
+                                        <li id="totalDuplicates"></li>
+                                    </ul>
+                                    <p>Press send to complete the process.</p>
+                                </div>
+                            </div>
+                            <div class="content-block__text content-block-navigation">
+                                <div class="sms-numbers-right">
+                                    <div class="contact-form__body contact-form__body__no__border">
+                                        <div class="form__section">
+                                            <div class="inputTitle">SMS Preview:</div>
+                                            <textarea disabled class="info_textarea" id="messageToSendConfirmation"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-block__wrapper">
+                            <div class="content-back-forward-buttons d-flex justify-content-between">
+                                <div class="content-simple__button"><a class="button button--grey unicode-back" href="javascript:void(0);" onclick="previousTab(4);">Back</a>
+                                </div>
+                                <div class="content-simple__button"><a class="button button--primary unicode-envelope" href="javascript:void(0);" onclick="sendSMS();">Send SMS</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-nav-block hide-element" id="step5">
+                        <div class="content-block__wrapper">
+                            <div class="content-block__text content-block-navigation">
+                                <h2 class="content-block__heading">Confirmation</h2>
+                                <div class="content-block__body">
+                                    <p id="confirmationSending">Send in progress, please wait.</p>
+                                    <ul>
+                                        <li id="confirmationSuccessNumber"></li>
+                                        <li id="confirmationErrorNumber"><b>0</b> messages failed to send</li>
+                                        <li id="confirmationCosts">Calculating cost...</li>
+                                        <li id="confirmationNewBalance">Calculating cost...</li>
+                                    </ul>
+                                    <p id="confirmationSendingStatus"></p>
+                                    <div id="numberSendStatusContainer" class="hide-element">
+                                        <div id="numberSendStatus" class="error_download_delete">Download the sent status report</div>
+                                        <img class="download_errors" onClick="downloadErrorNumbers('sms_sent_status_summary')" src="style/download.svg" alt="" />
+                                        <a id="sms_sent_status_summary" class="download_icon " href="#" download></a>
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="content-block__image">
+                                    <picture>
+                                        <img id="confirmationSendingIcon" class="image-confirmation hide-element" src="style/hardware-other.svg" alt="" />
+                                        <img id="confirmationFatalIcon" class="image-confirmation hide-element" src="style/fatal-error.svg" alt="" />
+                                        <img id="confirmationSentIcon" class="image-confirmation" src="style/email-existing.svg" alt="" />
+                                    </picture>
+                            </div>
+                        </div>
+                        <div class="content-block__wrapper">
+                            <div class="content-back-forward-buttons d-flex justify-content-left">
+                                <div class="content-simple__button"><a class="button button--primary unicode-reset" href="javascript:void(0);" onclick="resetApplication();">Reset</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<script src="scripts/errorHandler.js" type="text/javascript"></script>
+<script src="scripts/post.js" type="text/javascript"></script>
+<script src="scripts/script.js" type="text/javascript"></script>
+<script src="scripts/utilities.js" type="text/javascript"></script>
+<script src="scripts/libphonenumber/bundle/libphonenumber-min.js" type="text/javascript"></script>
+</html>
